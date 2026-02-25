@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row mt-4 mb-4">
+    <div class="col-md-12">
+        <h2 class="text-warning">My Analytics</h2>
+        <p class="text-muted">A statistical breakdown of your overall performance.</p>
+    </div>
+</div>
+
+<div class="row justify-content-center mt-5">
+    <div class="col-md-4 mb-4">
+        <div class="card text-center border-0 shadow-sm h-100">
+            <div class="card-body py-5">
+                <p class="text-muted text-uppercase fw-bold mb-1">Your Overall Average</p>
+                <h1 class="display-3 text-primary fw-bold">{{ stats.average_marks }}%</h1>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 mb-4">
+        <div class="card text-center border-0 shadow-sm h-100">
+            <div class="card-body py-5">
+                <p class="text-muted text-uppercase fw-bold mb-1">Your School Rank</p>
+                <h1 class="display-3 text-warning fw-bold">#{{ stats.rank }}</h1>
+                <p class="text-muted mt-2 mb-0">Top {{ stats.percentile }}% of your class</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

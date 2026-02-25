@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row mt-4">
+    <div class="col-12">
+        <h2 class="mb-4">Teacher Dashboard</h2>
+        <div class="card shadow-sm border-0">
+            <div class="card-body">
+                <h5 class="card-title text-success">Welcome Back!</h5>
+                <p class="card-text text-muted">Manage your assigned subjects, view your enrolled students, and publish
+                    marks.</p>
+                <hr>
+                <div class="row mt-4">
+                    <div class="col-md-4 mb-3">
+                        <div class="card border-success text-center">
+                            <div class="card-body py-4">
+                                <h4 class="text-success mb-0">My Subjects</h4>
+                                <a href="{{ url_for('teacher_subjects') }}"
+                                    class="btn btn-success btn-sm mt-3 w-100">View</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="card border-primary text-center">
+                            <div class="card-body py-4">
+                                <h4 class="text-primary mb-0">Grade Students</h4>
+                                <a href="{{ url_for('teacher_add_marks') }}"
+                                    class="btn btn-primary btn-sm mt-3 w-100">Add Marks</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="card border-warning text-center">
+                            <div class="card-body py-4">
+                                <h4 class="text-warning mb-0">Class Analytics</h4>
+                                <a href="{{ url_for('teacher_analytics') }}"
+                                    class="btn btn-warning text-white btn-sm mt-3 w-100">View Performance</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

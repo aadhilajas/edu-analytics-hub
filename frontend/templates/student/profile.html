@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row align-items-center mb-4 mt-4">
+    <div class="col-md-6">
+        <h2 class="mb-0 text-secondary">My Profile</h2>
+        <p class="text-muted">Your registered academic details.</p>
+    </div>
+</div>
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow border-0 rounded-4">
+            <div class="card-body p-5">
+                <div class="text-center mb-4">
+                    <div class="rounded-circle bg-secondary text-white d-inline-flex align-items-center justify-content-center mb-3"
+                        style="width: 80px; height: 80px; font-size: 2rem;">
+                        {{ profile.user.name[0] }}
+                    </div>
+                    <h3 class="font-weight-bold">{{ profile.user.name }}</h3>
+                    <p class="text-muted mb-0">{{ profile.user.email }}</p>
+                </div>
+
+                <hr>
+
+                <div class="row text-center mt-4">
+                    <div class="col-6">
+                        <p class="text-muted text-uppercase mb-1 small fw-bold">Class / Grade</p>
+                        <h5 class="mb-0">{{ profile.class_name }}</h5>
+                    </div>
+                    <div class="col-6">
+                        <p class="text-muted text-uppercase mb-1 small fw-bold">Roll Number</p>
+                        <h5 class="mb-0">{{ profile.roll_number }}</h5>
+                    </div>
+                </div>
+
+                <div class="mt-5 text-center">
+                    <a href="{{ url_for('student_dashboard') }}"
+                        class="btn btn-outline-secondary btn-sm px-4 rounded-pill">Back to Dashboard</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

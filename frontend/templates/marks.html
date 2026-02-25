@@ -1,0 +1,100 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Marks Management</h2>
+    {% if role in ['admin', 'teacher'] %}
+    <button type="button" class="btn btn-success rounded-pill px-4" data-bs-toggle="modal"
+        data-bs-target="#addMarkModal">
+        + Add Marks
+    </button>
+    {% endif %}
+</div>
+
+<!-- Add Mark Modal -->
+<div class="modal fade" id="addMarkModal" tabindex="-1" aria-labelledby="addMarkModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content rounded-4 border-0 shadow">
+            <div class="modal-header">
+                <h5 class="modal-title font-weight-bold" id="addMarkModalLabel">Add Marks for Student</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="POST" action="{{ url_for('add_mark') }}">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="student_id" class="form-label">Select Student</label>
+                        <select class="form-select" id="student_id" name="student_id" required>
+                            <option value="" selected disabled>Choose a student...</option>
+                            {% for student in students %}
+                            <option value="{{ student.id }}">{{ student.name }} ({{ student.class_name }})</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="subject_id" class="form-label">Select Subject</label>
+                        <select class="form-select" id="subject_id" name="subject_id" required>
+                            <option value="" selected disabled>Choose a subject...</option>
+                            {% for subject in subjects %}
+                            <option value="{{ subject.id }}">{{ subject.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="marks" class="form-label">Marks Obtained</label>
+                        <input type="number" step="0.01" min="0" max="100" class="form-control" id="marks" name="marks"
+                            required placeholder="e.g., 85.50">
+                    </div>
+                </div>
+                <div class="modal-footer border-0">
+                    <button type="button" class="btn btn-light rounded-pill" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary rounded-pill px-4">Save Marks</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="card shadow-sm border-0 rounded-4 overflow-hidden mt-4">
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th class="px-4 py-3">Student</th>
+                        <th class="py-3">Subject</th>
+                        <th class="py-3 text-end">Marks</th>
+                        {% if role in ['admin', 'teacher'] %}
+                        <th class="px-4 py-3 text-end">Actions</th>
+                        {% endif %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for mark in marks %}
+                    <tr>
+                        <td class="px-4 py-3 font-weight-bold">
+                            {{ mark.student.name if mark.student else "Unknown Student" }}
+                            <br>
+                            <small class="text-muted">{{ mark.student.class_name if mark.student else "" }}</small>
+                        </td>
+                        <td class="py-3 align-middle"><span class="badge bg-info text-dark">{{ mark.subject.name if
+                                mark.subject else "Unknown Subject" }}</span></td>
+                        <td class="py-3 align-middle text-end font-weight-bold fs-5 text-primary">{{ mark.marks }}</td>
+                        {% if role in ['admin', 'teacher'] %}
+                        <td class="px-4 py-3 text-end align-middle">
+                            <a href="{{ url_for('delete_mark', mark_id=mark.id) }}"
+                                class="btn btn-sm btn-outline-danger"
+                                onclick="return confirm('Delete these marks?')">Delete</a>
+                        </td>
+                        {% endif %}
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="4" class="text-center py-5 text-muted">No marks recorded yet.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

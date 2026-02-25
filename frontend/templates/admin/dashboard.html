@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row mt-4">
+    <div class="col-12">
+        <h2 class="mb-4">Admin Dashboard</h2>
+        <div class="card shadow-sm border-0">
+            <div class="card-body">
+                <h5 class="card-title text-primary">System Overview</h5>
+                <p class="card-text text-muted">Welcome, Super User! You have full access to manage students, teachers,
+                    subjects, and analytics across the entire platform.</p>
+                <hr>
+                <div class="row mt-4">
+                    <div class="col-md-3 mb-3">
+                        <div class="card border-primary text-center">
+                            <div class="card-body py-4">
+                                <h3 class="text-primary mb-0">Students</h3>
+                                <a href="{{ url_for('admin_students') }}"
+                                    class="btn btn-primary btn-sm mt-3 w-100">Manage</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <div class="card border-success text-center">
+                            <div class="card-body py-4">
+                                <h3 class="text-success mb-0">Teachers</h3>
+                                <a href="{{ url_for('admin_teachers') }}"
+                                    class="btn btn-success btn-sm mt-3 w-100">Manage</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <div class="card border-info text-center">
+                            <div class="card-body py-4">
+                                <h3 class="text-info mb-0">Subjects</h3>
+                                <a href="{{ url_for('admin_subjects') }}"
+                                    class="btn btn-info text-white btn-sm mt-3 w-100">Manage</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <div class="card border-warning text-center">
+                            <div class="card-body py-4">
+                                <h3 class="text-warning mb-0">Reports</h3>
+                                <a href="{{ url_for('admin_analytics') }}"
+                                    class="btn btn-warning text-white btn-sm mt-3 w-100">View All</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

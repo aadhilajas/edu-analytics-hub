@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row mt-4 mb-4">
+    <div class="col-md-12">
+        <h2 class="text-warning">Global System Analytics</h2>
+    </div>
+</div>
+
+<div class="row">
+    <!-- Top Students Leaderboard -->
+    <div class="col-md-6 mb-4">
+        <div class="card shadow-sm border-0 h-100">
+            <div class="card-body">
+                <h5 class="card-title text-primary"><i class="bi bi-trophy"></i> School Leaderboard (Top 10)</h5>
+                <hr>
+                <div class="table-responsive">
+                    <table class="table table-sm table-hover align-middle">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Rank</th>
+                                <th>Student</th>
+                                <th>Average Score</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for entry in leaderboard %}
+                            <tr {% if loop.index <=3 %}class="table-warning" {% endif %}>
+                                <td><strong>#{{ loop.index }}</strong></td>
+                                <td>{{ entry.student_name }}</td>
+                                <td>
+                                    <span class="badge bg-primary rounded-pill">{{ entry.average_marks }}%</span>
+                                </td>
+                            </tr>
+                            {% else %}
+                            <tr>
+                                <td colspan="3" class="text-center py-3 text-muted">No data available.</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Subject Averages Graph -->
+    <div class="col-md-6 mb-4">
+        <div class="card shadow-sm border-0 h-100">
+            <div class="card-body">
+                <h5 class="card-title text-success"><i class="bi bi-bar-chart"></i> Global Subject Averages</h5>
+                <hr>
+                <div style="height: 300px;">
+                    <canvas id="subjectAvgChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const ctx = document.getElementById('subjectAvgChart');
+        if (ctx) {
+            const rawData = {{ subjects | tojson | safe
+        }
+    };
+    const labels = rawData.map(d => d.subject_name);
+    const data = rawData.map(d => d.average_marks);
+
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Average Score (%)',
+                data: data,
+                backgroundColor: 'rgba(255, 193, 7, 0.7)',
+                borderColor: 'rgba(255, 193, 7, 1)',
+                borderWidth: 1,
+                borderRadius: 4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: { beginAtZero: true, max: 100 }
+            }
+        }
+    });
+        }
+    });
+</script>
+{% endblock %}

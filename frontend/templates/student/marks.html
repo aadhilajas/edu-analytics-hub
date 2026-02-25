@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row align-items-center mb-4 mt-4">
+    <div class="col-md-6">
+        <h2 class="mb-0 text-info">My Marks</h2>
+        <p class="text-muted">Your published academic report card.</p>
+    </div>
+</div>
+
+<div class="card shadow-sm border-0">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead class="table-info text-info">
+                    <tr>
+                        <th>Subject</th>
+                        <th>Marks Scored</th>
+                        <th>Date Published</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for mark in marks %}
+                    <tr>
+                        <td><strong>{{ mark.subject.name }}</strong></td>
+                        <td>
+                            {% if mark.marks >= 90 %}
+                            <span class="badge bg-success rounded-pill px-3">{{ mark.marks }}</span>
+                            {% elif mark.marks >= 50 %}
+                            <span class="badge bg-primary rounded-pill px-3">{{ mark.marks }}</span>
+                            {% else %}
+                            <span class="badge bg-danger rounded-pill px-3">{{ mark.marks }}</span>
+                            {% endif %}
+                        </td>
+                        <td class="text-muted small">{{ mark.created_at[:10] }}</td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="3" class="text-center py-4 text-muted">No marks published for you yet.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
